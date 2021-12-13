@@ -61,6 +61,16 @@ class Ui_LeftMenu(object):
         self.line_2.setGeometry(QRect(10, 270, 181, 20))
         self.line_2.setFrameShape(QFrame.HLine)
         self.line_2.setFrameShadow(QFrame.Sunken)
+        self.generic_filter_button = QPushButton(LeftMenu)
+        self.generic_filter_button.setObjectName(u"generic_filter_button")
+        self.generic_filter_button.setGeometry(QRect(10, 520, 181, 41))
+        self.generic_filter_button.setStyleSheet(u"background-color: rgb(65, 65, 65);\n"
+"color: rgb(255, 255, 255);")
+        self.colors_button = QPushButton(LeftMenu)
+        self.colors_button.setObjectName(u"colors_button")
+        self.colors_button.setGeometry(QRect(10, 570, 181, 41))
+        self.colors_button.setStyleSheet(u"background-color: rgb(65, 65, 65);\n"
+"color: rgb(255, 255, 255);")
 
         self.retranslateUi(LeftMenu)
 
@@ -76,5 +86,7 @@ class Ui_LeftMenu(object):
         self.choose_label.setText(QCoreApplication.translate("LeftMenu", u"Choose an image...", None))
         self.import_button.setText(QCoreApplication.translate("LeftMenu", u"Import", None))
         self.title_label.setText(QCoreApplication.translate("LeftMenu", u"<html><head/><body><p align=\"center\"><span style=\" font-size:24pt; font-weight:700;\">Homebrew</span></p><p align=\"center\"><span style=\" font-size:24pt; font-weight:700;\">GIMP</span></p></body></html>", None))
+        self.generic_filter_button.setText(QCoreApplication.translate("LeftMenu", u"Generic Filter", None))
+        self.colors_button.setText(QCoreApplication.translate("LeftMenu", u"Colors", None))
     # retranslateUi
 

@@ -1,4 +1,4 @@
-from PIL import Image, ImageFilter
+from PIL import Image, ImageFilter, ImageEnhance
 import os
 import io
 import numpy as np
@@ -7,6 +7,8 @@ from scipy.signal import convolve2d
 import functions.general as fc
 import cv2
 from math import ceil
+from skimage.color import rgb2hsv, hsv2rgb
+import colorsys
 
 
 class Img():
@@ -14,6 +16,8 @@ class Img():
     def __init__(self, path):
         self.path = path
         self.img = Image.open(path)
+        if(self.img.mode == "RGBA"):
+            self.img = self.img.convert("RGB")
         self.img_uint8 = np.array(self.img)
         self.img_original = self.img_uint8
         self.img_now = self.img_uint8
@@ -107,7 +111,6 @@ class Img():
                     points_x, points_y, temp_img[i][j])
         temp_img = (temp_img * 255).astype(np.uint8)
         self.return_img = temp_img
-        print('linear test')
         return self.return_img
 
     def laplacian_filter_test(self, array):
@@ -451,6 +454,113 @@ class Img():
         temp_img = temp_img.filter(ImageFilter.MedianFilter(size))
         self.img_now = np.array(temp_img)
         return Image.fromarray(self.img_now)
+    
+    def colored_hist(self):
+        colors = ["red", "green", "blue"]
+        channel_id = [0, 1, 2]
+
+        plt.xlim([0,256])
+        for id, col in zip(channel_id, colors):
+            histogram, bin_edges = np.histogram(self.img_now[:, :, id], bins=256, range=(0, 256))
+            plt.plot(bin_edges[0:-1], histogram, color=col)
+
+        plt.title('Colored Hist', size=15)
+        plt.xlabel("Color value")
+        plt.ylabel("Pixels")
+
+        strfile = 'colored_hist.png'
+        plt.savefig(strfile, dpi=100)
+        plt.close()
+        return Image.open(strfile)
+    
+    def hue(self, array, hue=270):
+        temp_img = array
+
+        image = Image.fromarray(temp_img)
+        img = image.convert('RGBA')
+        arr = np.array(np.asarray(img).astype('float'))
+        new_img = fc.shift_hue(arr, hue/360.).astype('uint8')
+
+        self.return_img = new_img
+        return self.return_img
+
+    def saturation_enc(self, array, num):
+        temp_img = array
+        temp_img = Image.fromarray(temp_img)
+        converter = ImageEnhance.Color(temp_img)
+        temp_img = converter.enhance(num)
+        self.return_img = np.array(temp_img)
+        return self.return_img
+    
+    def resize_i(self, array, fator=0.5):
+        temp_img = array
+        w1 = temp_img.shape[1]
+        h1 = temp_img.shape[0]
+
+        w2 = np.floor(w1*fator).astype(np.int64)
+        h2 = np.floor(h1*fator).astype(np.int64)
+
+        # temp = np.empty((w2,h2))
+        # for i in range(h2):
+        #     for j in range(w2):
+        #         px = np.floor(j*fator).astype(np.int64)
+        #         py = np.floor(i*fator).astype(np.int64)
+        #         temp[i,j] = self.img_now[px,py]
+
+        img_new = Image.fromarray(temp_img)
+        img_res = img_new.resize((w2, h2))
+        self.return_img = np.array(img_res)
+        return self.return_img
+
+    def rotate_i(self, array, rot=90):
+        img_new = Image.fromarray(array)
+        img_rot = img_new.rotate(rot, expand=True)
+        self.return_img = np.array(img_rot)
+        return self.return_img
+    
+    def to_hsv(self):
+        temp_img = self.img_now
+        temp_img = temp_img/255
+        temp_img = rgb2hsv(temp_img)
+        self.img_now = temp_img
+        self.img_now = (np.uint8(np.clip(np.real(temp_img) * 255, 0, 255)))
+        return fc.from_array(self.img_now)
+
+    def col_laplacian_filter_test(self, array):
+        laplacian = np.array([[0, 1, 0],
+                            [1, -4, 1],
+                            [0, 1, 0]])
+        img_hsv = cv2.cvtColor(array, cv2.COLOR_RGB2HSV)
+        img_hsv[:,:,2] = (convolve2d(img_hsv[:,:,2], laplacian, mode="same"))*0.2
+        img_rgb = cv2.cvtColor(img_hsv, cv2.COLOR_HSV2RGB)
+        self.return_img = (((array/255) + (img_rgb/255)*0.5)*255).clip(0, 255).astype(np.uint8)
+        return self.return_img
+    
+    def col_mean_simple_filter_test(self, array, size):
+        kernel = fc.generate_mean_simple_kernel(size)
+        img_hsv = cv2.cvtColor(array, cv2.COLOR_RGB2HSV)
+        img_hsv[:,:,2] = convolve2d(img_hsv[:,:,2], kernel, mode="same")
+        img_rgb = cv2.cvtColor(img_hsv, cv2.COLOR_HSV2RGB)
+        self.return_img = img_rgb
+        return self.return_img
+    
+    def col_mean_weighted_filter_test(self, array, size):
+        kernel = fc.generate_mean_weighted_kernel(size)
+        img_hsv = cv2.cvtColor(array, cv2.COLOR_RGB2HSV)
+        img_hsv[:,:,2] = convolve2d(img_hsv[:,:,2], kernel, mode="same")
+        img_rgb = cv2.cvtColor(img_hsv, cv2.COLOR_HSV2RGB)
+        self.return_img = img_rgb
+        return self.return_img
+    
+    def serpia(self, array):
+        temp_img = array
+        temp_img = temp_img/255
+        sp = np.array([[0.393, 0.769, 0.189],
+                       [0.349, 0.686, 0.168],
+                       [0.272, 0.534, 0.131]]).T
+        temp_img = temp_img @ sp
+        self.return_img = (temp_img * 255).clip(0,255).astype(np.uint8)
+        return self.return_img
 
     def img_to_array(self):
         img_byte_arr = io.BytesIO()

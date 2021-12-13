@@ -7,7 +7,7 @@ from gui.pages.ui_image import Ui_application_image
 from gui.pages.ui_esteganografia import Ui_Frame
 from gui.pages.ui_left_menu import Ui_LeftMenu
 from gui.pages.ui_linear_parts import Ui_LinearParts
-from gui.pages.ui_sections import Ui_Secoes
+from gui.pages.ui_sections_2 import Ui_Secoes
 
 from .img import Img
 import functions.general as fc
@@ -51,6 +51,12 @@ class UI_MainWindow(object):
 
         # FILTERS BUTTON
         self.ui_left_menu.filters_button.clicked.connect(self.to_filters)
+
+        # GENERIC FILTER BUTTON
+        self.ui_left_menu.generic_filter_button.clicked.connect(self.to_generic_filter)
+
+        # COLORS BUTTON
+        self.ui_left_menu.colors_button.clicked.connect(self.to_colors)
 
         # self.left_menu.setStyleSheet("background-color: #525252")
         self.left_menu.setMinimumWidth(200)
@@ -101,10 +107,16 @@ class UI_MainWindow(object):
         # SLIDERS
         # GAMA
         self.ui_info.gama_slider.valueChanged.connect(self.gama_slider_changed)
-        self.gama_slider_value = 0
+        self.gama_slider_value = 100
         # BRIGHTNESS
         self.ui_info.brightness_slider.valueChanged.connect(self.brightness_slider_changed)
-        self.brightness_slider_value = 0
+        self.brightness_slider_value = 100
+        # HUE
+        self.ui_info.hue_slider.valueChanged.connect(self.hue_slider_changed)
+        self.hue_slider_value = 180
+        # SATURATION
+        self.ui_info.saturation_slider.valueChanged.connect(self.saturation_slider_changed)
+        self.saturation_slider_value = 100
 
         # APPLY BUTTON
         self.ui_info.apply_button.clicked.connect(self.apply_checkbox_test)
@@ -179,6 +191,29 @@ class UI_MainWindow(object):
         # LIMIAR
         self.check_limiar_bool = False
         self.ui_info.limiar_bool.stateChanged.connect(lambda:self.change_limiar_bool(self.ui_info.limiar_bool))
+        # HUE
+        self.check_hue_bool = False
+        self.ui_info.hue_bool.stateChanged.connect(lambda:self.change_hue_bool(self.ui_info.hue_bool))
+        # SATURATION
+        self.check_saturation_bool = False
+        self.ui_info.saturation_bool.stateChanged.connect(lambda:self.change_saturation_bool(self.ui_info.saturation_bool))
+        # RESIZE
+        self.check_resize_bool = False
+        self.ui_info.resize_bool.stateChanged.connect(lambda:self.change_resize_bool(self.ui_info.resize_bool))
+        # ROTATE
+        self.check_rotate_bool = False
+        self.ui_info.rotate_bool.stateChanged.connect(lambda:self.change_rotate_bool(self.ui_info.rotate_bool))
+        # SERPIA
+        self.check_serpia_bool = False
+        self.ui_info.serpia_bool.stateChanged.connect(lambda:self.change_serpia_bool(self.ui_info.serpia_bool))
+
+
+        """
+        COLORS
+        """
+
+        # APPLY
+        self.ui_info.apply_colors_button.clicked.connect(self.apply_checkbox_test)
 
         # ADD WIDGETS TO APP
         self.main_layout.addWidget(self.left_menu)
@@ -223,15 +258,15 @@ class UI_MainWindow(object):
 
     def change_negative_bool(self, new_negative_bool):
         self.check_negative_bool = new_negative_bool.isChecked()
-        # self.apply_checkbox_test()
+        self.apply_checkbox_test()
     
     def change_log_bool(self, new_log_bool):
         self.check_log_bool = new_log_bool.isChecked()
-        # self.apply_checkbox_test()
+        self.apply_checkbox_test()
 
     def change_equalize_bool(self, new_equalize_bool):
         self.check_equalize_bool = new_equalize_bool.isChecked()
-        # self.apply_checkbox_test()
+        self.apply_checkbox_test()
 
     def change_lp_bool(self, new_lp_bool):
         self.check_lp_bool = new_lp_bool.isChecked()
@@ -263,30 +298,45 @@ class UI_MainWindow(object):
     def change_sobel_y_bool(self, sobel_y_bool):
         self.check_sobel_y_bool = sobel_y_bool.isChecked()
         self.apply_checkbox_test()
-    def change_nled_bool(self, sobel_nled_bool):
-        self.check_nled_bool = sobel_nled_bool.isChecked()
+    def change_nled_bool(self, nled_bool):
+        self.check_nled_bool = nled_bool.isChecked()
         self.apply_checkbox_test()
-    def change_gray_scale_mean_bool(self, sobel_gray_scale_mean_bool):
-        self.check_gray_scale_mean_bool = sobel_gray_scale_mean_bool.isChecked()
+    def change_gray_scale_mean_bool(self, gray_scale_mean_bool):
+        self.check_gray_scale_mean_bool = gray_scale_mean_bool.isChecked()
         self.apply_checkbox_test()
-    def change_gray_scale_avg_bool(self, sobel_gray_scale_avg_bool):
-        self.check_gray_scale_avg_bool = sobel_gray_scale_avg_bool.isChecked()
+    def change_gray_scale_avg_bool(self, gray_scale_avg_bool):
+        self.check_gray_scale_avg_bool = gray_scale_avg_bool.isChecked()
         self.apply_checkbox_test()
-    def change_low_fourier_bool(self, sobel_low_fourier_bool):
-        self.check_log_bool = sobel_low_fourier_bool.isChecked()
+    def change_low_fourier_bool(self, low_fourier_bool):
+        self.check_low_fourier_bool = low_fourier_bool.isChecked()
         self.apply_checkbox_test()
-    def change_high_fourier_bool(self, sobel_high_fourier_bool):
-        self.check_high_fourier_bool = sobel_high_fourier_bool.isChecked()
+    def change_high_fourier_bool(self, high_fourier_bool):
+        self.check_high_fourier_bool = high_fourier_bool.isChecked()
         self.apply_checkbox_test()
-    def change_des_fourier_bool(self, sobel_des_fourier_bool):
-        self.check_des_fourier_bool = sobel_des_fourier_bool.isChecked()
+    def change_des_fourier_bool(self, des_fourier_bool):
+        self.check_des_fourier_bool = des_fourier_bool.isChecked()
         self.apply_checkbox_test()
-    def change_limiar_bool(self, sobel_limiar_bool):
-        self.check_limiar_bool = sobel_limiar_bool.isChecked()
+    def change_limiar_bool(self, limiar_bool):
+        self.check_limiar_bool = limiar_bool.isChecked()
+        self.apply_checkbox_test()
+    def change_hue_bool(self, hue_bool):
+        self.check_hue_bool = hue_bool.isChecked()
+        self.apply_checkbox_test()
+    def change_saturation_bool(self, saturation_bool):
+        self.check_saturation_bool = saturation_bool.isChecked()
+        self.apply_checkbox_test()
+    def change_resize_bool(self, resize_bool):
+        self.check_resize_bool = resize_bool.isChecked()
+        self.apply_checkbox_test()
+    def change_rotate_bool(self, rotate_bool):
+        self.check_rotate_bool = rotate_bool.isChecked()
+        self.apply_checkbox_test()
+    def change_serpia_bool(self, serpia_bool):
+        self.check_serpia_bool = serpia_bool.isChecked()
+        print("serpia bool: ", serpia_bool)
         self.apply_checkbox_test()
     
     def apply_gama_brightness(self):
-        self.img_display = img.img_original
 
         self.img_display = img.gama_test(self.img_display, self.gama_slider_value/100)
         self.img_display = img.brightness_test(self.img_display, self.brightness_slider_value/100)
@@ -323,72 +373,113 @@ class UI_MainWindow(object):
         # self.img_display = img.gama_test(self.img_display, self.gama_slider_value/100)
         # self.img_display = img.brightness_test(self.img_display, self.brightness_slider_value/100)
         print("commence")
+        self.img_display = img.img_original
+        print(len(self.img_display.shape))
         size = int(self.ui_info.kernel_size_select.currentText())
+        radius = self.ui_info.radius_value.value()
+        resize = float(self.ui_info.resize_value.currentText())
+        rotate = float(self.ui_info.rotate_value.currentText())
+        color_scheme = 0 # GRAY
+        if(len(img.img_now.shape) > 2):
+            color_scheme = 1 # COLORED
+
         print(size)
 
         self.apply_gama_brightness()
-
+        
         if (self.check_negative_bool):
             self.img_display = img.negative_image_test(self.img_display)
         if (self.check_log_bool):
             self.img_display = img.log_test(self.img_display)
         if (self.check_equalize_bool):
             self.img_display = img.equalize_hist_test(self.img_display)
-        # LAPLACIAN
-        if (self.check_laplacian_bool):
-            self.img_display = img.laplacian_filter_test(self.img_display)
-        # MEAN SIMPLE
-        if (self.check_mean_simple_bool):
-            self.img_display = img.mean_simple_filter_test(self.img_display, size)
-        # MEAN SIMPLE WEIGHTED
-        if (self.check_mean_simple_w_bool):
-            self.img_display = img.mean_weighted_filter_test(self.img_display, size)
+        
         # MEDIAN
-        if (self.check_median_bool):
+        if (self.check_median_bool and color_scheme == 0):
             self.img_display = img.median_filter_test(self.img_display, size)
+        # MEAN SIMPLE
+        if (self.check_mean_simple_bool and color_scheme == 0):
+            self.img_display = img.mean_simple_filter_test(self.img_display, size)
+        if (self.check_mean_simple_bool and color_scheme == 1):
+            self.img_display = img.col_mean_simple_filter_test(self.img_display, size)
+        # MEAN SIMPLE WEIGHTED
+        if (self.check_mean_simple_w_bool and color_scheme == 0):
+            self.img_display = img.mean_weighted_filter_test(self.img_display, size)
+        if (self.check_mean_simple_w_bool and color_scheme == 1):
+            self.img_display = img.col_mean_weighted_filter_test(self.img_display, size)
+        # LAPLACIAN
+        if (self.check_laplacian_bool and color_scheme == 0):
+            self.img_display = img.laplacian_filter_test(self.img_display)
+        if (self.check_laplacian_bool and color_scheme == 1):
+            self.img_display = img.col_laplacian_filter_test(self.img_display)
+        # LOW FOURIER
+        if (self.check_low_fourier_bool and color_scheme == 0):
+            print("Done")
+            self.img_display = img.low_fourier_test(self.img_display, radius=radius)
+        # HIGH FOURIER
+        if (self.check_high_fourier_bool and color_scheme == 0):
+            self.img_display = img.high_fourier_test(self.img_display, radius=radius)
+        # DES FOURIER
+        if (self.check_des_fourier_bool and color_scheme == 0):
+            self.img_display = img.fourier_test(self.img_display)
         # HIGH BOOST
-        if (self.check_high_boost_bool):
+        if (self.check_high_boost_bool and color_scheme == 0):
             self.img_display = img.high_boost_filter_test(self.img_display)
         # SOBEL X
-        if (self.check_sobel_x_bool):
+        if (self.check_sobel_x_bool and color_scheme == 0):
             self.img_display = img.sobel_x_filter_test(self.img_display)
         # SOBEL Y
-        if (self.check_sobel_y_bool):
+        if (self.check_sobel_y_bool and color_scheme == 0):
             self.img_display = img.sobel_y_filter_test(self.img_display)
         # NON LINEAR EDGE DETECTION
-        if (self.check_nled_bool):
+        if (self.check_nled_bool and color_scheme == 0):
             self.img_display = img.non_linear_test(self.img_display)
+        # LIMIAR
+        if (self.check_limiar_bool and color_scheme == 0):
+            self.img_display = img.limiar_test(self.img_display)
+        # HUE
+        if (self.check_hue_bool and color_scheme == 1):
+            self.img_display = img.hue(self.img_display, self.hue_slider_value)
+        # SATURATION
+        if (self.check_saturation_bool and color_scheme == 1):
+            self.img_display = img.saturation_enc(self.img_display, self.saturation_slider_value/100)
         # GRAY SCALE MEAN
-        if (self.check_gray_scale_mean_bool):
+        if (self.check_gray_scale_mean_bool and color_scheme == 1):
             self.img_display = img.gray_scale_mean_test(self.img_display)
         # GRAY SCALE AVG
-        if (self.check_gray_scale_avg_bool):
+        if (self.check_gray_scale_avg_bool and color_scheme == 1):
             self.img_display = img.gray_scale_avg_test(self.img_display)
-        # LOW FOURIER
-        if (self.check_low_fourier_bool):
-            self.img_display = img.low_fourier_test(self.img_display)
-        # HIGH FOURIER
-        if (self.check_high_fourier_bool):
-            self.img_display = img.high_fourier_test(self.img_display)
-        # DES FOURIER
-        if (self.check_des_fourier_bool):
-            self.img_display = img.fourier_test(self.img_display)
-        # LIMIAR
-        if (self.check_limiar_bool):
-            self.img_display = img.limiar_test(self.img_display)
+        # SERPIA
+        if (self.check_serpia_bool and color_scheme == 1):
+            self.img_display = img.serpia(self.img_display)
 
-        if len(self.ui_info.points_x_values.toPlainText()) > 0 and self.check_lp_bool == True:
-            points_x = self.ui_info.points_x_values.toPlainText()
-            points_y = self.ui_info.points_y_values.toPlainText()
+        if (self.check_lp_bool) == True:
+            if (len(self.ui_info.points_x_values.toPlainText()) > 0):
+                points_x = self.ui_info.points_x_values.toPlainText()
+                points_y = self.ui_info.points_y_values.toPlainText()
 
-            points_x = fc.transform_points(points_x)
-            points_y = fc.transform_points(points_y)
+                points_x = fc.transform_points(points_x)
+                points_y = fc.transform_points(points_y)
 
-            self.img_display = img.linear_parts_test(points_x, points_y, self.img_display)
+                self.img_display = img.linear_parts_test(points_x, points_y, self.img_display)
+            
         
-        print("array: \n", self.img_display)
-        print("array max: \n", self.img_display.max())
-        # Potencial Choke point: conversão e depois definição de img_now
+        # # MEAN SIMPLE
+        # if (self.check_mean_simple_bool):
+        #     self.img_display = img.col_mean_simple_filter_test(self.img_display, size)
+        # # MEAN SIMPLE WEIGHTED
+        # if (self.check_mean_simple_w_bool):
+        #     self.img_display = img.col_mean_weighted_filter_test(self.img_display, size)
+        # # LAPLACIAN
+        # if (self.check_laplacian_bool):
+        #     self.img_display = img.col_laplacian_filter_test(self.img_display)
+        
+        
+        if(self.check_resize_bool):
+            self.img_display = img.resize_i(self.img_display, fator=resize)
+        if(self.check_rotate_bool):
+            self.img_display = img.rotate_i(self.img_display, rot=rotate)
+
         self.img_display = img.convert(self.img_display)
         # print("qpixmap", self.img_display.toqpixmap)
         # print("type", type(self.img_display))
@@ -397,12 +488,21 @@ class UI_MainWindow(object):
         qim = ImageQt(self.img_display)
         self.ui_image.image_label.setPixmap(QPixmap.fromImage(qim))
 
-        hist_plot = img.histogram_plot()
         MAX_SIZE = (300, 300)
+
+        hist_plot = img.histogram_plot()
         hist_plot.thumbnail(MAX_SIZE)
         img_hist_plot = ImageQt(hist_plot)
         self.ui_info.histogram_image.setPixmap(QPixmap.fromImage(img_hist_plot))
+
+        if not (QImage.isGrayscale(qim)):
+            colored_hist_plot = img.colored_hist()
+            colored_hist_plot.thumbnail(MAX_SIZE)
+            img_colored_hist_plot = ImageQt(colored_hist_plot)
+            self.ui_info.color_histogram_image.setPixmap(QPixmap.fromImage(img_colored_hist_plot))
+
         print("done")
+
     def gama_slider_changed(self):
         new_slider_value = str(self.ui_info.gama_slider.value())
         self.gama_slider_value = self.ui_info.gama_slider.value()
@@ -416,6 +516,20 @@ class UI_MainWindow(object):
         self.ui_info.brightness_value_label.setText(new_slider_value)
         self.ui_info.brightness_value_label.setStyleSheet(" font-size:12pt; color:#ffffff;")
         self.apply_brightness()
+        
+    def hue_slider_changed(self):
+        new_slider_value = str(self.ui_info.hue_slider.value())
+        self.hue_slider_value = self.ui_info.hue_slider.value()
+        self.ui_info.hue_value_label.setText(new_slider_value)
+        self.ui_info.hue_value_label.setStyleSheet(" font-size:12pt; color:#ffffff;")
+        self.apply_brightness()
+
+    def saturation_slider_changed(self):
+        new_slider_value = str(self.ui_info.saturation_slider.value())
+        self.saturation_slider_value = self.ui_info.saturation_slider.value()
+        self.ui_info.saturation_value_label.setText(new_slider_value)
+        self.ui_info.saturation_value_label.setStyleSheet(" font-size:12pt; color:#ffffff;")
+        self.apply_brightness()
 
     def import_image(self):
 
@@ -426,7 +540,7 @@ class UI_MainWindow(object):
         global lbl_hist
         global curve
 
-        fname = QFileDialog.getOpenFileName(self.image, 'Open file', "", "Image files (*.jpg *.png *.tif)")
+        fname = QFileDialog.getOpenFileName(self.image, 'Open file', "", "Image files (*.jpg *.png *.tif *jpeg)")
         image_path = fname[0]
 
         img = Img(image_path)
@@ -442,6 +556,12 @@ class UI_MainWindow(object):
         hist_plot.thumbnail(MAX_SIZE)
         img_hist_plot = ImageQt(hist_plot)
         self.ui_info.histogram_image.setPixmap(QPixmap.fromImage(img_hist_plot))
+
+        if (len(img.img_now.shape) > 2):
+            colored_hist_plot = img.colored_hist()
+            colored_hist_plot.thumbnail(MAX_SIZE)
+            img_colored_hist_plot = ImageQt(colored_hist_plot)
+            self.ui_info.color_histogram_image.setPixmap(QPixmap.fromImage(img_colored_hist_plot))
     
     def to_linear_parts(self):
         self.info.setCurrentWidget(self.ui_info.linear_parts)
@@ -454,6 +574,12 @@ class UI_MainWindow(object):
     
     def to_filters(self):
         self.info.setCurrentWidget(self.ui_info.filters)
+
+    def to_generic_filter(self):
+        self.info.setCurrentWidget(self.ui_info.generic_filter)
+
+    def to_colors(self):
+        self.info.setCurrentWidget(self.ui_info.colors)
 
     def apply_checkbox(self, checkbox_type, checkbox):
         if checkbox.isChecked():
