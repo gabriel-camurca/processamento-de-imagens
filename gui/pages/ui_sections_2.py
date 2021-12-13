@@ -407,63 +407,63 @@ class Ui_Secoes(object):
 "font: 700 9pt \"Segoe UI\";")
         self.gridLayout = QGridLayout(self.configure_generic_filter_box)
         self.gridLayout.setObjectName(u"gridLayout")
-        self.a32_input = QLineEdit(self.configure_generic_filter_box)
-        self.a32_input.setObjectName(u"a32_input")
-        self.a32_input.setStyleSheet(u"color: rgb(0, 0, 0);")
-
-        self.gridLayout.addWidget(self.a32_input, 2, 1, 1, 1)
-
-        self.a21_input = QLineEdit(self.configure_generic_filter_box)
-        self.a21_input.setObjectName(u"a21_input")
-        self.a21_input.setStyleSheet(u"color: rgb(0, 0, 0);")
-
-        self.gridLayout.addWidget(self.a21_input, 1, 0, 1, 1)
-
-        self.a12_input = QLineEdit(self.configure_generic_filter_box)
-        self.a12_input.setObjectName(u"a12_input")
-        self.a12_input.setStyleSheet(u"color: rgb(0, 0, 0);")
-
-        self.gridLayout.addWidget(self.a12_input, 0, 1, 1, 1)
-
-        self.a33_input = QLineEdit(self.configure_generic_filter_box)
-        self.a33_input.setObjectName(u"a33_input")
-        self.a33_input.setStyleSheet(u"color: rgb(0, 0, 0);")
-
-        self.gridLayout.addWidget(self.a33_input, 2, 2, 1, 1)
-
-        self.a22_input = QLineEdit(self.configure_generic_filter_box)
-        self.a22_input.setObjectName(u"a22_input")
-        self.a22_input.setStyleSheet(u"color: rgb(0, 0, 0);")
-
-        self.gridLayout.addWidget(self.a22_input, 1, 1, 1, 1)
-
-        self.a31_input = QLineEdit(self.configure_generic_filter_box)
-        self.a31_input.setObjectName(u"a31_input")
-        self.a31_input.setStyleSheet(u"color: rgb(0, 0, 0);")
-
-        self.gridLayout.addWidget(self.a31_input, 2, 0, 1, 1)
-
-        self.a13_input = QLineEdit(self.configure_generic_filter_box)
-        self.a13_input.setObjectName(u"a13_input")
-        self.a13_input.setStyleSheet(u"color: rgb(0, 0, 0);")
-
-        self.gridLayout.addWidget(self.a13_input, 0, 2, 1, 1)
-
-        self.a23_input = QLineEdit(self.configure_generic_filter_box)
-        self.a23_input.setObjectName(u"a23_input")
-        self.a23_input.setStyleSheet(u"color: rgb(0, 0, 0);")
-
-        self.gridLayout.addWidget(self.a23_input, 1, 2, 1, 1)
-
-        self.a11_input = QLineEdit(self.configure_generic_filter_box)
+        self.a11_input = QSpinBox(self.configure_generic_filter_box)
         self.a11_input.setObjectName(u"a11_input")
-        self.a11_input.setStyleSheet(u"color: rgb(0, 0, 0);")
+        self.a11_input.setStyleSheet(u"background-color: rgb(77, 77, 77);")
 
         self.gridLayout.addWidget(self.a11_input, 0, 0, 1, 1)
 
+        self.a21_input = QSpinBox(self.configure_generic_filter_box)
+        self.a21_input.setObjectName(u"a21_input")
+        self.a21_input.setStyleSheet(u"background-color: rgb(77, 77, 77);")
+
+        self.gridLayout.addWidget(self.a21_input, 1, 0, 1, 1)
+
+        self.a31_input = QSpinBox(self.configure_generic_filter_box)
+        self.a31_input.setObjectName(u"a31_input")
+        self.a31_input.setStyleSheet(u"background-color: rgb(77, 77, 77);")
+
+        self.gridLayout.addWidget(self.a31_input, 2, 0, 1, 1)
+
+        self.a22_input = QSpinBox(self.configure_generic_filter_box)
+        self.a22_input.setObjectName(u"a22_input")
+        self.a22_input.setStyleSheet(u"background-color: rgb(77, 77, 77);")
+
+        self.gridLayout.addWidget(self.a22_input, 1, 1, 1, 1)
+
+        self.a13_input = QSpinBox(self.configure_generic_filter_box)
+        self.a13_input.setObjectName(u"a13_input")
+        self.a13_input.setStyleSheet(u"background-color: rgb(77, 77, 77);")
+
+        self.gridLayout.addWidget(self.a13_input, 0, 2, 1, 1)
+
+        self.a33_input = QSpinBox(self.configure_generic_filter_box)
+        self.a33_input.setObjectName(u"a33_input")
+        self.a33_input.setStyleSheet(u"background-color: rgb(77, 77, 77);")
+
+        self.gridLayout.addWidget(self.a33_input, 2, 2, 1, 1)
+
+        self.a23_input = QSpinBox(self.configure_generic_filter_box)
+        self.a23_input.setObjectName(u"a23_input")
+        self.a23_input.setStyleSheet(u"background-color: rgb(77, 77, 77);")
+
+        self.gridLayout.addWidget(self.a23_input, 1, 2, 1, 1)
+
+        self.a12_input = QSpinBox(self.configure_generic_filter_box)
+        self.a12_input.setObjectName(u"a12_input")
+        self.a12_input.setStyleSheet(u"background-color: rgb(77, 77, 77);")
+
+        self.gridLayout.addWidget(self.a12_input, 0, 1, 1, 1)
+
+        self.a32_input = QSpinBox(self.configure_generic_filter_box)
+        self.a32_input.setObjectName(u"a32_input")
+        self.a32_input.setStyleSheet(u"background-color: rgb(77, 77, 77);")
+
+        self.gridLayout.addWidget(self.a32_input, 2, 1, 1, 1)
+
         self.apply_generic_filter = QPushButton(self.generic_filter)
         self.apply_generic_filter.setObjectName(u"apply_generic_filter")
-        self.apply_generic_filter.setGeometry(QRect(110, 280, 131, 31))
+        self.apply_generic_filter.setGeometry(QRect(110, 290, 131, 31))
         self.apply_generic_filter.setStyleSheet(u"background-color: rgb(65, 65, 65);\n"
 "color: rgb(255, 255, 255);")
         Secoes.addWidget(self.generic_filter)

@@ -540,7 +540,7 @@ class UI_MainWindow(object):
         global lbl_hist
         global curve
 
-        fname = QFileDialog.getOpenFileName(self.image, 'Open file', "", "Image files (*.jpg *.png *.tif *jpeg)")
+        fname = QFileDialog.getOpenFileName(self.image, 'Open file', "", "Image files (*.jpg *.png *.tif *jpeg *.bmp)")
         image_path = fname[0]
 
         img = Img(image_path)
