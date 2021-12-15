@@ -71,6 +71,16 @@ class Ui_LeftMenu(object):
         self.colors_button.setGeometry(QRect(10, 570, 181, 41))
         self.colors_button.setStyleSheet(u"background-color: rgb(65, 65, 65);\n"
 "color: rgb(255, 255, 255);")
+        self.clear = QPushButton(LeftMenu)
+        self.clear.setObjectName(u"clear")
+        self.clear.setGeometry(QRect(40, 720, 121, 31))
+        self.clear.setStyleSheet(u"background-color: rgb(65, 65, 65);\n"
+"color: rgb(255, 255, 255);")
+        self.line_3 = QFrame(LeftMenu)
+        self.line_3.setObjectName(u"line_3")
+        self.line_3.setGeometry(QRect(10, 660, 181, 20))
+        self.line_3.setFrameShape(QFrame.HLine)
+        self.line_3.setFrameShadow(QFrame.Sunken)
 
         self.retranslateUi(LeftMenu)
 
@@ -88,5 +98,6 @@ class Ui_LeftMenu(object):
         self.title_label.setText(QCoreApplication.translate("LeftMenu", u"<html><head/><body><p align=\"center\"><span style=\" font-size:24pt; font-weight:700;\">Homebrew</span></p><p align=\"center\"><span style=\" font-size:24pt; font-weight:700;\">GIMP</span></p></body></html>", None))
         self.generic_filter_button.setText(QCoreApplication.translate("LeftMenu", u"Generic Filter", None))
         self.colors_button.setText(QCoreApplication.translate("LeftMenu", u"Colors", None))
+        self.clear.setText(QCoreApplication.translate("LeftMenu", u"Clear", None))
     # retranslateUi
 

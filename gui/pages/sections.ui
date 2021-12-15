@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>350</width>
-    <height>900</height>
+    <width>349</width>
+    <height>879</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,7 +22,7 @@
 #generic_filter{background-color: rgb(17,17, 17);}</string>
   </property>
   <property name="currentIndex">
-   <number>4</number>
+   <number>2</number>
   </property>
   <widget class="QWidget" name="linear_parts">
    <widget class="QLabel" name="lp_title">
@@ -186,6 +186,23 @@ font: 700 9pt &quot;Segoe UI&quot;;</string>
       <string/>
      </property>
     </widget>
+   </widget>
+   <widget class="QPushButton" name="apply_lp">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>690</y>
+      <width>131</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(65, 65, 65);
+color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>Apply</string>
+    </property>
    </widget>
   </widget>
   <widget class="QWidget" name="esteganography">
@@ -997,7 +1014,7 @@ color: rgb(255, 255, 255);</string>
 color: rgb(255, 255, 255);</string>
        </property>
        <property name="text">
-        <string>High Fourier</string>
+        <string>Low Fourier</string>
        </property>
       </widget>
      </item>
@@ -1008,7 +1025,7 @@ color: rgb(255, 255, 255);</string>
 color: rgb(255, 255, 255);</string>
        </property>
        <property name="text">
-        <string>Low Fourier</string>
+        <string>High Fourier</string>
        </property>
       </widget>
      </item>
@@ -1025,10 +1042,28 @@ color: rgb(255, 255, 255);</string>
      </item>
     </layout>
    </widget>
+   <widget class="QPushButton" name="apply_filters">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>850</y>
+      <width>131</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(65, 65, 65);
+color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>Apply</string>
+    </property>
+   </widget>
    <zorder>adjust_box</zorder>
    <zorder>title_filters</zorder>
    <zorder>select_filter_box</zorder>
    <zorder>select_fourier_box</zorder>
+   <zorder>apply_filters</zorder>
   </widget>
   <widget class="QWidget" name="generic_filter">
    <widget class="QLabel" name="generic_filter_title">
@@ -1072,6 +1107,9 @@ font: 700 9pt &quot;Segoe UI&quot;;</string>
        <property name="styleSheet">
         <string notr="true">background-color: rgb(77, 77, 77);</string>
        </property>
+       <property name="minimum">
+        <number>-99</number>
+       </property>
       </widget>
      </item>
      <item row="1" column="0">
@@ -1093,12 +1131,18 @@ font: 700 9pt &quot;Segoe UI&quot;;</string>
        <property name="styleSheet">
         <string notr="true">background-color: rgb(77, 77, 77);</string>
        </property>
+       <property name="minimum">
+        <number>-99</number>
+       </property>
       </widget>
      </item>
      <item row="0" column="2">
       <widget class="QSpinBox" name="a13_input">
        <property name="styleSheet">
         <string notr="true">background-color: rgb(77, 77, 77);</string>
+       </property>
+       <property name="minimum">
+        <number>-99</number>
        </property>
       </widget>
      </item>
@@ -1121,6 +1165,9 @@ font: 700 9pt &quot;Segoe UI&quot;;</string>
        <property name="styleSheet">
         <string notr="true">background-color: rgb(77, 77, 77);</string>
        </property>
+       <property name="minimum">
+        <number>-99</number>
+       </property>
       </widget>
      </item>
      <item row="2" column="1">
@@ -1136,7 +1183,7 @@ font: 700 9pt &quot;Segoe UI&quot;;</string>
     <property name="geometry">
      <rect>
       <x>110</x>
-      <y>290</y>
+      <y>330</y>
       <width>131</width>
       <height>31</height>
      </rect>
@@ -1147,6 +1194,23 @@ color: rgb(255, 255, 255);</string>
     </property>
     <property name="text">
      <string>Apply</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="generic_filter_bool">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>280</y>
+      <width>121</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 12pt &quot;Segoe UI&quot;;
+color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>Generic Filter</string>
     </property>
    </widget>
   </widget>
@@ -1226,7 +1290,7 @@ color: rgb(255, 255, 255);</string>
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>210</y>
+      <y>190</y>
       <width>311</width>
       <height>118</height>
      </rect>
@@ -1304,7 +1368,7 @@ color: rgb(255, 255, 255);</string>
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>340</y>
+      <y>310</y>
       <width>311</width>
       <height>118</height>
      </rect>
@@ -1382,7 +1446,7 @@ color: rgb(255, 255, 255);</string>
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>470</y>
+      <y>430</y>
       <width>311</width>
       <height>261</height>
      </rect>
@@ -1412,7 +1476,7 @@ font: 700 9pt &quot;Segoe UI&quot;;</string>
     <property name="geometry">
      <rect>
       <x>110</x>
-      <y>760</y>
+      <y>830</y>
       <width>131</width>
       <height>31</height>
      </rect>
@@ -1424,6 +1488,57 @@ color: rgb(255, 255, 255);</string>
     <property name="text">
      <string>Apply</string>
     </property>
+   </widget>
+   <widget class="QGroupBox" name="chroma_key_box">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>690</y>
+      <width>311</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);
+font: 700 9pt &quot;Segoe UI&quot;;</string>
+    </property>
+    <property name="title">
+     <string>Chroma Key</string>
+    </property>
+    <widget class="QPushButton" name="import_chroma_key">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>30</y>
+       <width>131</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(65, 65, 65);
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>Import</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="serpia_bool_2">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>70</y>
+       <width>111</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 12pt &quot;Segoe UI&quot;;
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>Chroma Key</string>
+     </property>
+    </widget>
    </widget>
   </widget>
  </widget>

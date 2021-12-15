@@ -61,6 +61,11 @@ class Ui_Secoes(object):
         self.lp_image = QLabel(self.plot_box)
         self.lp_image.setObjectName(u"lp_image")
         self.lp_image.setGeometry(QRect(10, 20, 291, 231))
+        self.apply_lp = QPushButton(self.linear_parts)
+        self.apply_lp.setObjectName(u"apply_lp")
+        self.apply_lp.setGeometry(QRect(110, 690, 131, 31))
+        self.apply_lp.setStyleSheet(u"background-color: rgb(65, 65, 65);\n"
+"color: rgb(255, 255, 255);")
         Secoes.addWidget(self.linear_parts)
         self.esteganography = QWidget()
         self.esteganography.setObjectName(u"esteganography")
@@ -388,11 +393,18 @@ class Ui_Secoes(object):
 
         self.verticalLayout_2.addWidget(self.des_fourier_bool)
 
+        self.apply_filters = QPushButton(self.filters)
+        self.apply_filters.setObjectName(u"apply_filters")
+        self.apply_filters.setGeometry(QRect(110, 850, 131, 31))
+        self.apply_filters.setStyleSheet(u"background-color: rgb(65, 65, 65);\n"
+"color: rgb(255, 255, 255);")
+
         Secoes.addWidget(self.filters)
         self.adjust_box.raise_()
         self.title_filters.raise_()
         self.select_filter_box.raise_()
         self.select_fourier_box.raise_()
+        self.apply_filters.raise_()
         self.generic_filter = QWidget()
         self.generic_filter.setObjectName(u"generic_filter")
         self.generic_filter_title = QLabel(self.generic_filter)
@@ -410,61 +422,75 @@ class Ui_Secoes(object):
         self.a11_input = QSpinBox(self.configure_generic_filter_box)
         self.a11_input.setObjectName(u"a11_input")
         self.a11_input.setStyleSheet(u"background-color: rgb(77, 77, 77);")
+        self.a11_input.setMinimum(-99)
 
         self.gridLayout.addWidget(self.a11_input, 0, 0, 1, 1)
 
         self.a21_input = QSpinBox(self.configure_generic_filter_box)
         self.a21_input.setObjectName(u"a21_input")
         self.a21_input.setStyleSheet(u"background-color: rgb(77, 77, 77);")
+        self.a21_input.setMinimum(-99)
 
         self.gridLayout.addWidget(self.a21_input, 1, 0, 1, 1)
 
         self.a31_input = QSpinBox(self.configure_generic_filter_box)
         self.a31_input.setObjectName(u"a31_input")
         self.a31_input.setStyleSheet(u"background-color: rgb(77, 77, 77);")
+        self.a31_input.setMinimum(-99)
 
         self.gridLayout.addWidget(self.a31_input, 2, 0, 1, 1)
 
         self.a22_input = QSpinBox(self.configure_generic_filter_box)
         self.a22_input.setObjectName(u"a22_input")
         self.a22_input.setStyleSheet(u"background-color: rgb(77, 77, 77);")
+        self.a22_input.setMinimum(-99)
 
         self.gridLayout.addWidget(self.a22_input, 1, 1, 1, 1)
 
         self.a13_input = QSpinBox(self.configure_generic_filter_box)
         self.a13_input.setObjectName(u"a13_input")
         self.a13_input.setStyleSheet(u"background-color: rgb(77, 77, 77);")
+        self.a13_input.setMinimum(-99)
 
         self.gridLayout.addWidget(self.a13_input, 0, 2, 1, 1)
 
         self.a33_input = QSpinBox(self.configure_generic_filter_box)
         self.a33_input.setObjectName(u"a33_input")
         self.a33_input.setStyleSheet(u"background-color: rgb(77, 77, 77);")
+        self.a33_input.setMinimum(-99)
 
         self.gridLayout.addWidget(self.a33_input, 2, 2, 1, 1)
 
         self.a23_input = QSpinBox(self.configure_generic_filter_box)
         self.a23_input.setObjectName(u"a23_input")
         self.a23_input.setStyleSheet(u"background-color: rgb(77, 77, 77);")
+        self.a23_input.setMinimum(-99)
 
         self.gridLayout.addWidget(self.a23_input, 1, 2, 1, 1)
 
         self.a12_input = QSpinBox(self.configure_generic_filter_box)
         self.a12_input.setObjectName(u"a12_input")
         self.a12_input.setStyleSheet(u"background-color: rgb(77, 77, 77);")
+        self.a12_input.setMinimum(-99)
 
         self.gridLayout.addWidget(self.a12_input, 0, 1, 1, 1)
 
         self.a32_input = QSpinBox(self.configure_generic_filter_box)
         self.a32_input.setObjectName(u"a32_input")
         self.a32_input.setStyleSheet(u"background-color: rgb(77, 77, 77);")
+        self.a32_input.setMinimum(-99)
 
         self.gridLayout.addWidget(self.a32_input, 2, 1, 1, 1)
 
         self.apply_generic_filter = QPushButton(self.generic_filter)
         self.apply_generic_filter.setObjectName(u"apply_generic_filter")
-        self.apply_generic_filter.setGeometry(QRect(110, 290, 131, 31))
+        self.apply_generic_filter.setGeometry(QRect(110, 330, 131, 31))
         self.apply_generic_filter.setStyleSheet(u"background-color: rgb(65, 65, 65);\n"
+"color: rgb(255, 255, 255);")
+        self.generic_filter_bool = QCheckBox(self.generic_filter)
+        self.generic_filter_bool.setObjectName(u"generic_filter_bool")
+        self.generic_filter_bool.setGeometry(QRect(120, 280, 121, 26))
+        self.generic_filter_bool.setStyleSheet(u"font: 12pt \"Segoe UI\";\n"
 "color: rgb(255, 255, 255);")
         Secoes.addWidget(self.generic_filter)
         self.colors = QWidget()
@@ -504,7 +530,7 @@ class Ui_Secoes(object):
 
         self.hue_box = QGroupBox(self.colors)
         self.hue_box.setObjectName(u"hue_box")
-        self.hue_box.setGeometry(QRect(20, 210, 311, 118))
+        self.hue_box.setGeometry(QRect(20, 190, 311, 118))
         self.hue_box.setStyleSheet(u"color: rgb(255, 255, 255);\n"
 "font: 700 9pt \"Segoe UI\";")
         self.hue_bool = QCheckBox(self.hue_box)
@@ -517,9 +543,9 @@ class Ui_Secoes(object):
         self.hue_slider.setObjectName(u"hue_slider")
         self.hue_slider.setGeometry(QRect(10, 58, 291, 22))
         self.hue_slider.setMinimum(0)
-        self.hue_slider.setMaximum(360)
-        self.hue_slider.setValue(180)
-        self.hue_slider.setSliderPosition(180)
+        self.hue_slider.setMaximum(100)
+        self.hue_slider.setValue(50)
+        self.hue_slider.setSliderPosition(50)
         self.hue_slider.setOrientation(Qt.Horizontal)
         self.hue_slider.setInvertedAppearance(False)
         self.hue_value_label = QLabel(self.hue_box)
@@ -527,7 +553,7 @@ class Ui_Secoes(object):
         self.hue_value_label.setGeometry(QRect(140, 80, 27, 22))
         self.saturation_box = QGroupBox(self.colors)
         self.saturation_box.setObjectName(u"saturation_box")
-        self.saturation_box.setGeometry(QRect(20, 340, 311, 118))
+        self.saturation_box.setGeometry(QRect(20, 310, 311, 118))
         self.saturation_box.setStyleSheet(u"color: rgb(255, 255, 255);\n"
 "font: 700 9pt \"Segoe UI\";")
         self.saturation_bool = QCheckBox(self.saturation_box)
@@ -540,9 +566,9 @@ class Ui_Secoes(object):
         self.saturation_slider.setObjectName(u"saturation_slider")
         self.saturation_slider.setGeometry(QRect(10, 58, 291, 22))
         self.saturation_slider.setMinimum(0)
-        self.saturation_slider.setMaximum(200)
-        self.saturation_slider.setValue(100)
-        self.saturation_slider.setSliderPosition(100)
+        self.saturation_slider.setMaximum(100)
+        self.saturation_slider.setValue(50)
+        self.saturation_slider.setSliderPosition(50)
         self.saturation_slider.setOrientation(Qt.Horizontal)
         self.saturation_slider.setInvertedAppearance(False)
         self.saturation_value_label = QLabel(self.saturation_box)
@@ -550,7 +576,7 @@ class Ui_Secoes(object):
         self.saturation_value_label.setGeometry(QRect(140, 80, 27, 22))
         self.color_histogram_box = QGroupBox(self.colors)
         self.color_histogram_box.setObjectName(u"color_histogram_box")
-        self.color_histogram_box.setGeometry(QRect(20, 470, 311, 261))
+        self.color_histogram_box.setGeometry(QRect(20, 430, 311, 261))
         self.color_histogram_box.setStyleSheet(u"color: rgb(255, 255, 255);\n"
 "font: 700 9pt \"Segoe UI\";")
         self.color_histogram_image = QLabel(self.color_histogram_box)
@@ -558,8 +584,23 @@ class Ui_Secoes(object):
         self.color_histogram_image.setGeometry(QRect(10, 20, 291, 231))
         self.apply_colors_button = QPushButton(self.colors)
         self.apply_colors_button.setObjectName(u"apply_colors_button")
-        self.apply_colors_button.setGeometry(QRect(110, 760, 131, 31))
+        self.apply_colors_button.setGeometry(QRect(110, 830, 131, 31))
         self.apply_colors_button.setStyleSheet(u"background-color: rgb(65, 65, 65);\n"
+"color: rgb(255, 255, 255);")
+        self.chroma_key_box = QGroupBox(self.colors)
+        self.chroma_key_box.setObjectName(u"chroma_key_box")
+        self.chroma_key_box.setGeometry(QRect(20, 690, 311, 111))
+        self.chroma_key_box.setStyleSheet(u"color: rgb(255, 255, 255);\n"
+"font: 700 9pt \"Segoe UI\";")
+        self.import_chroma_key = QPushButton(self.chroma_key_box)
+        self.import_chroma_key.setObjectName(u"import_chroma_key")
+        self.import_chroma_key.setGeometry(QRect(90, 30, 131, 31))
+        self.import_chroma_key.setStyleSheet(u"background-color: rgb(65, 65, 65);\n"
+"color: rgb(255, 255, 255);")
+        self.chroma_key_bool = QCheckBox(self.chroma_key_box)
+        self.chroma_key_bool.setObjectName(u"chroma_key_bool")
+        self.chroma_key_bool.setGeometry(QRect(100, 70, 111, 24))
+        self.chroma_key_bool.setStyleSheet(u"font: 12pt \"Segoe UI\";\n"
 "color: rgb(255, 255, 255);")
         Secoes.addWidget(self.colors)
 
@@ -583,6 +624,7 @@ class Ui_Secoes(object):
         self.points_y_values.setPlainText("")
         self.plot_box.setTitle(QCoreApplication.translate("Secoes", u"Plot", None))
         self.lp_image.setText("")
+        self.apply_lp.setText(QCoreApplication.translate("Secoes", u"Apply", None))
         self.esteg_title.setText(QCoreApplication.translate("Secoes", u"<html><head/><body><p><span style=\" font-size:14pt; font-weight:700; color:#ffffff;\">Esteganography</span></p></body></html>", None))
         self.encode_box.setTitle(QCoreApplication.translate("Secoes", u"Configure Encode", None))
         self.esteg_entry_text.setPlainText("")
@@ -646,12 +688,14 @@ class Ui_Secoes(object):
         self.select_fourier_box.setTitle(QCoreApplication.translate("Secoes", u"Fourier", None))
         self.radius_box.setTitle(QCoreApplication.translate("Secoes", u"Configure Radius", None))
         self.radius_size_label.setText(QCoreApplication.translate("Secoes", u"Radius Size", None))
-        self.high_fourier_bool.setText(QCoreApplication.translate("Secoes", u"High Fourier", None))
-        self.low_fourier_bool.setText(QCoreApplication.translate("Secoes", u"Low Fourier", None))
+        self.high_fourier_bool.setText(QCoreApplication.translate("Secoes", u"Low Fourier", None))
+        self.low_fourier_bool.setText(QCoreApplication.translate("Secoes", u"High Fourier", None))
         self.des_fourier_bool.setText(QCoreApplication.translate("Secoes", u"Des Fourier", None))
+        self.apply_filters.setText(QCoreApplication.translate("Secoes", u"Apply", None))
         self.generic_filter_title.setText(QCoreApplication.translate("Secoes", u"<html><head/><body><p><span style=\" font-size:14pt; font-weight:700; color:#ffffff;\">Generic Filter</span></p></body></html>", None))
         self.configure_generic_filter_box.setTitle(QCoreApplication.translate("Secoes", u"Configure", None))
         self.apply_generic_filter.setText(QCoreApplication.translate("Secoes", u"Apply", None))
+        self.generic_filter_bool.setText(QCoreApplication.translate("Secoes", u"Generic Filter", None))
         self.colors_title.setText(QCoreApplication.translate("Secoes", u"<html><head/><body><p><span style=\" font-size:14pt; font-weight:700; color:#ffffff;\">Colors</span></p></body></html>", None))
         self.colors_box.setTitle(QCoreApplication.translate("Secoes", u"Color Image", None))
         self.gray_scale_mean_bool.setText(QCoreApplication.translate("Secoes", u"Gray Scale Mean", None))
@@ -666,4 +710,7 @@ class Ui_Secoes(object):
         self.color_histogram_box.setTitle(QCoreApplication.translate("Secoes", u"Color Histogram", None))
         self.color_histogram_image.setText("")
         self.apply_colors_button.setText(QCoreApplication.translate("Secoes", u"Apply", None))
+        self.chroma_key_box.setTitle(QCoreApplication.translate("Secoes", u"Chroma Key", None))
+        self.import_chroma_key.setText(QCoreApplication.translate("Secoes", u"Import", None))
+        self.chroma_key_bool.setText(QCoreApplication.translate("Secoes", u"Chroma Key", None))
     # retranslateUi

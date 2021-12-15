@@ -10,17 +10,19 @@ def shift_hue(arr, hout):
     h, s, v = rgb_to_hsv(r, g, b)
     h = hout
     r, g, b = hsv_to_rgb(h, s, v)
-    arr = np.dstack((r, g, b, a))
+    arr = np.dstack((r, g, b))
     return arr
 
 def shift_saturation(arr, sout):
+    arr = arr/255
     rgb_to_hsv = np.vectorize(colorsys.rgb_to_hsv)
     hsv_to_rgb = np.vectorize(colorsys.hsv_to_rgb)
-    r, g, b, a = np.rollaxis(arr, axis=-1)
+    r, g, b = np.rollaxis(arr, axis=-1)
     h, s, v = rgb_to_hsv(r, g, b)
     s = sout
     r, g, b = hsv_to_rgb(h, s, v)
-    arr = np.dstack((r, g, b, a))
+    arr = np.dstack((r, g, b))
+    arr = (arr * 255).clip(0,255).astype(np.uint8)
     return arr
 
 def create_circular_mask(h, w, center=None, radius=None):
@@ -121,6 +123,12 @@ def generate_mean_weighted_kernel(size):
     kernel = kernel/pon
 
     return kernel
+
+def matriz_convert(n1: int, n2: int, n3: int, n4: int, n5: int, n6: int, n7: int, n8: int, n9: int):
+    generic_filter = np.array([[n1,n2,n3],
+                               [n4,n5,n6],
+                               [n7,n8,n9]])
+    return generic_filter
 
 def normalize_img(array):
     norm = np.interp(array, (array.min(), array.max()), (0, 1))

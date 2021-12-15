@@ -1,6 +1,7 @@
 from PIL import Image, ImageFilter, ImageEnhance
 import os
 import io
+from PyQt5 import QtGui
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.signal import convolve2d
@@ -29,8 +30,8 @@ class Img():
     def show_img_now(self):
         return Image.fromarray(self.img_now)
 
-    def histogram_plot(self):
-        img = Image.fromarray(self.img_now)
+    def histogram_plot(self, array):
+        img = Image.fromarray(array)
         hist = img.histogram()
         for i in range(0, 255):
             plt.bar(i, hist[i], color='gray')
@@ -123,17 +124,45 @@ class Img():
         self.return_img = temp_img
         return self.return_img
 
+    def laplacian_filter(self, array):
+        laplacian = np.array([[0, 1, 0],
+                              [1, -4, 1],
+                              [0, 1, 0]])
+        if len(array.shape) < 3:
+            temp_img = array
+            shp = array.shape
+            ipg = convolve2d(abs(temp_img), laplacian)
+            ipg = ipg[0:shp[0], 0:shp[1]]
+            ib =  ipg
+            ib = ib[0:shp[0], 0:shp[1]]
+            self.return_img = fc.normalize_img(1.5*ib)
+            return self.return_img
+        else:
+            img_hsv = cv2.cvtColor(array, cv2.COLOR_RGB2HSV)
+            img_hsv[:,:,2] = (convolve2d(img_hsv[:,:,2], laplacian, mode="same"))*0.3
+            img_rgb = cv2.cvtColor(img_hsv, cv2.COLOR_HSV2RGB)
+            self.return_img = fc.normalize_img(((img_rgb)*0.3)/255)
+            return self.return_img
+
     def high_boost_filter_test(self, array):
         gaussian = np.array([[1, 2, 1],
                              [2, -8, 2],
                              [1, 2, 1]])
-        temp_img = array
-        ipg = convolve2d(abs(temp_img), gaussian)
-        shp = temp_img.shape
-        ipg = ipg[0:shp[0], 0:shp[1]]
-        ib = temp_img - ipg
-        self.return_img = fc.normalize_img((ib*1.5))
-        return self.return_img
+        if len(array.shape) < 3:
+            temp_img = array
+            shp = array.shape
+            ipg = convolve2d(abs(temp_img), gaussian)
+            ipg = ipg[0:shp[0], 0:shp[1]]
+            ib = temp_img - ipg
+            ib = ib[0:shp[0], 0:shp[1]]
+            self.return_img = fc.normalize_img(3*ib)
+            return self.return_img
+        else:
+            img_hsv = cv2.cvtColor(array, cv2.COLOR_RGB2HSV)
+            img_hsv[:,:,2] = (convolve2d(img_hsv[:,:,2], gaussian, mode="same"))*0.3
+            img_rgb = cv2.cvtColor(img_hsv, cv2.COLOR_HSV2RGB)
+            self.return_img = fc.normalize_img(((img_rgb)*0.3)/255)
+            return self.return_img
 
     def sobel_x_filter_test(self, array):
         sobel_x = np.array([[-1, 0, 1],
@@ -157,19 +186,33 @@ class Img():
 
     def mean_simple_filter_test(self, array, size):
         kernel = fc.generate_mean_simple_kernel(size)
-        temp_img = array
-        temp_img = convolve2d(abs(temp_img), kernel)
-        temp_img = fc.normalize_img(temp_img)
-        self.return_img = temp_img
-        return self.return_img
+        if len(array.shape) < 3:
+            temp_img = array
+            temp_img = convolve2d(abs(temp_img), kernel, mode="same")
+            temp_img = fc.normalize_img(temp_img)
+            self.return_img = temp_img
+            return self.return_img
+        else:
+            img_hsv = cv2.cvtColor(array, cv2.COLOR_RGB2HSV)
+            img_hsv[:,:,2] = convolve2d(img_hsv[:,:,2], kernel, mode="same")
+            img_rgb = cv2.cvtColor(img_hsv, cv2.COLOR_HSV2RGB)
+            self.return_img = img_rgb
+            return self.return_img
 
     def mean_weighted_filter_test(self, array, size):
         kernel = fc.generate_mean_weighted_kernel(size)
-        temp_img = array
-        temp_img = convolve2d(abs(temp_img), kernel)
-        temp_img = fc.normalize_img(temp_img)
-        self.return_img = temp_img
-        return self.return_img
+        if len(array.shape) < 3:
+            temp_img = array
+            temp_img = convolve2d(abs(temp_img), kernel, mode="same")
+            temp_img = fc.normalize_img(temp_img)
+            self.return_img = temp_img
+            return self.return_img
+        else:
+            img_hsv = cv2.cvtColor(array, cv2.COLOR_RGB2HSV)
+            img_hsv[:,:,2] = convolve2d(img_hsv[:,:,2], kernel, mode="same")
+            img_rgb = cv2.cvtColor(img_hsv, cv2.COLOR_HSV2RGB)
+            self.return_img = img_rgb
+            return self.return_img
 
     def median_filter_test(self, array, size):
         temp_img = array
@@ -188,10 +231,8 @@ class Img():
         temp_img = array
         x = convolve2d(abs(temp_img), filter1)
         y = convolve2d(abs(temp_img), filter2)
-        temp_img = np.abs(x) + np.abs(y)
-        shp = self.img_now.shape
-        ip = temp_img[0:shp[0], 0:shp[1]]
-        self.return_img = ip
+        temp_img = (np.abs(x) + np.abs(y))
+        self.return_img = temp_img
         return self.return_img
 
     def limiar_test(self, array):
@@ -206,8 +247,8 @@ class Img():
         temp_img = temp_img/255
         temp_img = np.fft.fft2(temp_img)
         temp_img = np.fft.fftshift(temp_img)
-
-        self.return_img = (np.uint8(np.clip(np.real(temp_img) * 255, 0, 255)))
+        temp_img = fc.normalize_img(np.absolute(temp_img).clip(0,1000))
+        self.return_img = (np.uint8(np.clip(np.real(temp_img), 0, 255)))
         return (np.real(self.return_img))
 
     def high_fourier_test(self, array, radius=20):
@@ -242,7 +283,12 @@ class Img():
 
     def convert(self, array):
         array = array.astype(np.uint8)
-        return Image.fromarray(array)
+        print("tipo:", type(array))
+        # return Image.fromarray(array)
+        if(len(array.shape) > 2):
+            return QtGui.QImage(array, array.shape[1], array.shape[0], array.shape[1]*3, QtGui.QImage.Format_RGB888)
+        else:
+            return QtGui.QImage(array, array.shape[1], array.shape[0], array.shape[1], QtGui.QImage.Format_Indexed8)
 
     # aplicação definitiva das informações alteradas
     def negative_image(self):
@@ -305,6 +351,20 @@ class Img():
         temp_img = (temp_img).astype(np.uint8)
         self.img_now = temp_img
         return Image.fromarray(self.img_now)
+    
+    def chroma_key(self, array, fln):
+        temp_img = array
+        mask = temp_img[:,:,1] <= 251
+        mask = np.repeat(mask[:,:,np.newaxis], 3, axis=2)
+        
+        temp_img = mask * temp_img 
+        
+        img_new = Image.open(fln)
+        img_new = img_new.resize((temp_img.shape[1], temp_img.shape[0]))
+        img_new = np.array(img_new).astype(np.uint8)
+
+        self.return_img = (temp_img + (1- mask) * img_new).astype(np.uint8)
+        return self.return_img
 
     def linear_parts_apply(self, points_x, points_y):
         temp_img = self.img_now/255
@@ -390,8 +450,8 @@ class Img():
         temp_img = temp_img/255
         temp_img = np.fft.fft2(temp_img)
         temp_img = np.fft.fftshift(temp_img)
-
-        self.img_now = (np.uint8(np.clip(np.real(temp_img) * 255, 0, 255)))
+        temp_img = fc.normalize_img(np.absolute(temp_img).clip(0,1000))
+        self.img_now = (np.uint8(np.clip(np.real(temp_img), 0, 255)))
         return fc.from_array(np.real(temp_img))
 
     def high_fourier(self):
@@ -455,13 +515,20 @@ class Img():
         self.img_now = np.array(temp_img)
         return Image.fromarray(self.img_now)
     
-    def colored_hist(self):
+    def generic_filter(self, array, matrix):
+        generic = matrix
+        temp_img = array
+        temp_img = convolve2d(temp_img, generic, mode="same")
+        self.return_img = temp_img
+        return self.return_img
+    
+    def colored_hist(self, array):
         colors = ["red", "green", "blue"]
         channel_id = [0, 1, 2]
 
         plt.xlim([0,256])
         for id, col in zip(channel_id, colors):
-            histogram, bin_edges = np.histogram(self.img_now[:, :, id], bins=256, range=(0, 256))
+            histogram, bin_edges = np.histogram(array[:, :, id], bins=256, range=(0, 256))
             plt.plot(bin_edges[0:-1], histogram, color=col)
 
         plt.title('Colored Hist', size=15)
